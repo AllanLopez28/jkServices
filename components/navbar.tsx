@@ -22,9 +22,10 @@ export function Navbar({ locale }: { locale: Locale }) {
 
   return (
     <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="section py-4 flex items-center justify-between gap-6">
+      {/* ✅ Contenedor propio (sin .section) */}
+      <div className="mx-auto max-w-[1400px] px-3 sm:px-4 md:px-6 py-6 flex items-center justify-between gap-6">
         <Link href={basePath} className="flex items-center gap-3">
-          <div className="relative h-10 w-10">
+          <div className="relative h-9 w-9">
             <Image
               src="/logo-jk.png"
               alt="JK Service Agency"
@@ -33,10 +34,10 @@ export function Navbar({ locale }: { locale: Locale }) {
             />
           </div>
           <div className="leading-tight">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-brand-muted font-bold">
+            <p className="text-[12px] tracking-[0.25em] uppercase text-brand-muted font-bold">
               ACCOUNTING &amp; TAX SERVICES
             </p>
-            <p className="text-sm font-black text-brand-primaryDark">
+            <p className="text-[15px] font-black text-brand-primaryDark">
               JK Service Agency
             </p>
           </div>
@@ -64,7 +65,7 @@ export function Navbar({ locale }: { locale: Locale }) {
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <a
             href="tel:+16315550123"
             className="hidden sm:inline-flex items-center gap-2 rounded-2xl border border-brand-primary/30 bg-brand-primaryLight px-3 py-2 text-xs font-bold text-brand-primaryDark hover:bg-brand-primary/10"

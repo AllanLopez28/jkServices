@@ -1,108 +1,108 @@
 // components/service-grid.tsx
 "use client";
 
-import type { Locale } from "@/lib/locale";
-import { useAutoTranslation } from "@/lib/translate";
+import Image from "next/image";
 import Link from "next/link";
-import {
-  FileText,
-  IdCard,
-  Briefcase,
-  Building2,
-  ArrowRight
-} from "lucide-react";
+import { motion } from "framer-motion";
+import type { Locale } from "@/lib/locale";
 import { Button } from "@/components/ui/button";
 
-const servicesBase = [
-  {
-    icon: FileText,
-    titleEs: "Impuestos individuales 1040",
-    descriptionEs:
-      "Preparación profesional de tu declaración 1040 con créditos, dependientes y reembolsos."
-  },
-  {
-    icon: IdCard,
-    titleEs: "ITIN nuevo y renovación",
-    descriptionEs:
-      "Te ayudamos a solicitar o renovar tu ITIN con lista clara de documentos y plazos."
-  },
-  {
-    icon: Briefcase,
-    titleEs: "Self-employed / 1099",
-    descriptionEs:
-      "Declaraciones para trabajo por cuenta propia: Uber, DoorDash, limpieza, construcción y más."
-  },
-  {
-    icon: Building2,
-    titleEs: "Corporativos, payroll y sales tax",
-    descriptionEs:
-      "Apoyo para LLC/Corp, nómina de empleados y reporte de impuesto sobre ventas en NY."
-  }
-];
-
 export function ServiceGrid({ locale }: { locale: Locale }) {
+  const t = (es: string, en: string) => (locale === "es" ? es : en);
+
+  const cards = [
+    { src: "/s1.png", altEs: "Impuestos individuales 1040", altEn: "Individual taxes 1040" },
+    { src: "/s2.png", altEs: "Corporativos, payroll y sales tax", altEn: "Corporate, payroll & sales tax" },
+    { src: "/s3.png", altEs: "Self-employed / 1099", altEn: "Self-employed / 1099" },
+    { src: "/s4.png", altEs: "ITIN nuevo y renovación", altEn: "ITIN new & renewal" }
+  ];
+
   return (
-    <section className="bg-brand-primaryLight">
-      <div className="section flex flex-col gap-10">
-        {/* Título centrado */}
-        <div className="text-center space-y-2">
-          <p className="text-xs uppercase tracking-[0.25em] text-brand-muted font-bold">
-            {locale === "es" ? "Nuestros servicios" : "Our services"}
-          </p>
-          <h2 className="text-2xl md:text-3xl font-black text-brand-primaryDark">
-            {locale === "es"
-              ? "Servicios de impuestos y contabilidad"
-              : "Tax and accounting services"}
-          </h2>
-        </div>
+    <section className="relative w-full overflow-hidden">
+      <Image
+        src="/back2.png"
+        alt="Services background"
+        fill
+        className="object-cover object-center"
+        priority={false}
+        quality={100}
+        unoptimized={true} 
+      />
 
-        {/* Grid de 4 servicios fijos (sin links individuales) */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {servicesBase.map((service, index) => {
-            const title = useAutoTranslation(service.titleEs, locale);
-            const description = useAutoTranslation(
-              service.descriptionEs,
-              locale
-            );
-            const Icon = service.icon;
+      <div className="relative z-10">
+        {/* Altura reducida significativamente */}
+        <div className="section py-6 md:py-8">
+          <div className="grid items-start gap-6 lg:grid-cols-[1fr_1.15fr]">
+            {/* LEFT */}
+            <div className="pt-1">
+              <motion.h2
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+               className="text-white font-black tracking-tight text-3xl md:text-4xl leading-[1.15] max-w-[460px]"
 
-            return (
-              <div
-                key={index}
-                className="flex flex-col items-center text-center rounded-2xl bg-white shadow-sm border border-slate-200 px-6 py-10 gap-4"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-brand-primary/40 text-brand-primary mb-2">
-                  <Icon className="h-6 w-6" />
+                {t(
+                  "Tu aliado de confianza en impuestos y claridad financiera",
+                  "Your trusted partner in tax filing and financial clarity"
+                )}
+              </motion.h2>
+            </div>
+
+            {/* RIGHT: perfect 2x2 aligned grid */}
+            <div className="ml-auto w-full">
+              <div className="mx-auto w-full max-w-[480px]">
+                <div className="grid grid-cols-2 gap-4 place-items-center">
+                  {cards.map((c, idx) => (
+                    <motion.div
+                      key={c.src}
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.35 }}
+                      transition={{ duration: 0.4, delay: 0.05 + idx * 0.05 }}
+                      whileHover={{
+                        y: -4,
+                        scale: 1.01,
+                        boxShadow: "0 18px 35px rgba(0,0,0,0.25)"
+                      }}
+                      className={[
+                        "relative overflow-hidden rounded-xl",
+                        // ✅ Cards más pequeñas = perfect alignment
+                        "w-[200px] h-[230px] md:w-[220px] md:h-[250px]",
+                        // card frame (invisible, png is inside)
+                       
+                      ].join(" ")}
+                    >
+                      {/* Center the png without distortion */}
+                      <div className="absolute inset-0 flex items-center justify-center p-2">
+                        <Image
+                          src={c.src}
+                          alt={t(c.altEs, c.altEn)}
+                          width={600}
+                          height={600}
+                          className="h-full w-full object-contain"
+                          priority={false}
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
 
-                <h3 className="text-sm md:text-base font-black text-brand-primaryDark">
-                  {title}
-                </h3>
-
-                <p className="text-xs md:text-sm text-brand-muted font-medium">
-                  {description}
-                </p>
+                <div className="mt-4 flex justify-end">
+                  <Link href={`/${locale}/services`}>
+                    <Button size="sm" className="font-black text-sm">
+                      {t("Ver todos los servicios", "See all services")}
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Botón central → página con todos los servicios */}
-        <div className="flex justify-center pt-2">
-          <Link href={`/${locale}/services`}>
-            <Button
-              size="lg"
-              // Added "text-black" here to force the font color
-              className="min-w-[230px] justify-center font-black text-sm text-black"
-            >
-              {locale === "es"
-                ? "Ver todos los servicios"
-                : "See all services"}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div className="pointer-events-none absolute inset-0 bg-black/0" />
     </section>
   );
 }
