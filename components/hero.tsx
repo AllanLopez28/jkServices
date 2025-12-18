@@ -23,18 +23,18 @@ export function Hero({ locale }: { locale: Locale }) {
     {
       number: "500+",
       labelEs: "Declaraciones presentadas",
-      labelEn: "Returns filed"
+      labelEn: "Returns filed",
     },
     {
       number: "5+",
       labelEs: "Años de experiencia",
-      labelEn: "Years of experience"
+      labelEn: "Years of experience",
     },
     {
       number: t("Enero–Abril", "January–April"),
       labelEs: "Temporada de impuestos",
-      labelEn: "Tax season"
-    }
+      labelEn: "Tax season",
+    },
   ];
 
   return (
@@ -48,8 +48,8 @@ export function Hero({ locale }: { locale: Locale }) {
           fill
           priority
           className="object-cover object-center"
-        quality={100}
-        unoptimized={true} 
+          quality={100}
+          unoptimized={true}
         />
 
         {/* Overlay suave para contraste */}
@@ -59,13 +59,21 @@ export function Hero({ locale }: { locale: Locale }) {
         <div className="relative z-10">
           <div className="mx-auto max-w-6xl px-4">
             {/* ✅ Banner más corto */}
-            <div className="flex min-h-[380px] md:min-h-[430px] lg:min-h-[480px] items-center">
-              <div className="max-w-xl">
+            <div className="flex min-h-[380px] items-center md:min-h-[430px] lg:min-h-[480px]">
+
+              <div className="max-w-[26rem] sm:max-w-lg md:max-w-xl">
                 <motion.h1
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.55, ease: "easeOut" }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.05] text-brand-primaryDark"
+                  className={[
+                    "text-[clamp(1.95rem,6.2vw,3.75rem)]",
+                    "leading-[1.06] md:leading-[1.05]",
+                    "tracking-tight",
+                    "font-black text-brand-primaryDark",
+                    "break-words",
+                    "text-balance",
+                  ].join(" ")}
                 >
                   {t(
                     "Impuestos en manos de personas que sí se preocupan",
@@ -77,13 +85,33 @@ export function Hero({ locale }: { locale: Locale }) {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.55, delay: 0.08, ease: "easeOut" }}
-                  className="mt-4 text-sm md:text-base text-brand-muted font-medium leading-relaxed"
+                  className={[
+                    "mt-8 md:mt-4",
+                    "font-medium leading-relaxed text-brand-muted",
+                    "text-[0.95rem] md:text-base",
+                    "max-w-prose",
+                  ].join(" ")}
                 >
-                  {t(
-                    "Atención bilingüe (ES/EN) para Brentwood, NY. Te explicamos cada paso con calma y cuidamos tu caso como si fuera nuestro.",
-                    "Bilingual (ES/EN) service in Brentwood, NY. We explain every step clearly and take care of your case like it’s our own."
+                  {locale === "es" ? (
+                    <>
+                      Te explicamos cada paso {" "}
+                      <br className="block md:hidden" />
+                      y cuidamos tu caso {" "}
+                      <br className="block md:hidden" />
+                      como si fuera nuestro.
+                    </>
+                  ) : (
+                    <>
+                      We explain every step clearly {" "}
+                      <br className="block md:hidden" />
+                       and take care of your case {" "}
+                      <br className="block md:hidden" />
+                      like it’s our own.
+                    </>
                   )}
                 </motion.p>
+
+
 
                 {/* CTAs */}
                 <motion.div
@@ -116,54 +144,52 @@ export function Hero({ locale }: { locale: Locale }) {
                     </Button>
                   </a>
                 </motion.div>
-
-            
               </div>
             </div>
           </div>
         </div>
       </div>
 
-  {/* ✅ SECCIÓN DE ESTADÍSTICAS */}
-<div className="bg-brand-primary">
-  <div className="mx-auto max-w-6xl px-4 py-5">
-    <div className="grid gap-3 md:grid-cols-3">
-      {stats.map((s, index) => (
-        <motion.div
-          key={s.number + index}
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{
-            duration: 0.45,
-            delay: 0.10 + index * 0.10,
-            ease: "easeOut"
-          }}
-          whileHover={{
-            y: -3,
-            scale: 1.01
-          }}
-          className={[
-            "cursor-pointer text-center",
-            "rounded-xl px-6 py-5",
-            // tarjeta azul con efecto “inset” como la referencia
-            "bg-white/10 border border-white/10",
-            "shadow-[inset_0_1px_0_rgba(255,255,255,0.18),_0_10px_20px_rgba(2,6,23,0.12)]",
-            "transition-all"
-          ].join(" ")}
-        >
-          <p className="text-3xl font-black text-white leading-none">
-            {s.number}
-          </p>
-          <p className="mt-2 text-xs font-semibold text-white/80 tracking-wide">
-            {locale === "es" ? s.labelEs : s.labelEn}
-          </p>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</div>
-
+      {/* ✅ SECCIÓN DE ESTADÍSTICAS */}
+      <div className="bg-brand-primary">
+        <div className="mx-auto max-w-6xl px-4 py-5">
+          {/* gap más pequeño en móvil */}
+          <div className="grid gap-2 md:gap-3 md:grid-cols-3">
+            {stats.map((s, index) => (
+              <motion.div
+                key={s.number + index}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.10 + index * 0.10,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  y: -3,
+                  scale: 1.01,
+                }}
+                className={[
+                  "cursor-pointer text-center",
+                  "rounded-xl",
+                  "px-4 py-4 md:px-6 md:py-5",
+                  "bg-white/10 border border-white/10",
+                  "shadow-[inset_0_1px_0_rgba(255,255,255,0.18),_0_10px_20px_rgba(2,6,23,0.12)]",
+                  "transition-all",
+                ].join(" ")}
+              >
+                <p className="text-2xl md:text-3xl font-black text-white leading-none">
+                  {s.number}
+                </p>
+                <p className="mt-1.5 md:mt-2 text-[11px] md:text-xs font-semibold text-white/80 tracking-wide">
+                  {locale === "es" ? s.labelEs : s.labelEn}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

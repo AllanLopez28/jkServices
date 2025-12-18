@@ -40,7 +40,7 @@ export default function Home({
                   <strong className="text-blue-900 block mb-1">
                     {locale === "es" ? "Dirección" : "Address"}
                   </strong>
-                  <p className="text-slate-600">Brentwood, CA 94513</p>
+                  <p className="text-slate-600">Brentwood, NY 11717</p>
                 </div>
               </div>
 
@@ -55,7 +55,7 @@ export default function Home({
                   <strong className="text-blue-900 block mb-1">
                     {locale === "es" ? "Teléfono" : "Phone"}
                   </strong>
-                  <p className="text-slate-600">(555) 123-4567</p>
+                  <p className="text-slate-600">(631) 123-4567</p>
                 </div>
               </div>
 
