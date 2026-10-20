@@ -204,7 +204,7 @@ export default function ServicesPage({
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 24 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
                   whileHover={{
                     y: -6,
                     boxShadow: "0 18px 35px rgba(15, 23, 42, 0.18)"

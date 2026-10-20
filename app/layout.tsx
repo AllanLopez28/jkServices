@@ -2,6 +2,7 @@
 import "./globals.css";
 import "./motion-design.css";
 import "./interior.css";
+import "./motion-enhancements.css";
 import type { ReactNode } from "react";
 import { DM_Sans, Manrope } from "next/font/google";
 
@@ -17,7 +18,11 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        {/* Flag motion before first paint so scroll-reveal pre-states never flash in. */}
+        <script dangerouslySetInnerHTML={{ __html: `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("motion-ready")` }} />
+      </head>
       <body
         className={`${dmSans.variable} ${manrope.variable}`}
       >

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { isLocale, type Locale } from "@/lib/locale";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { InViewObserver } from "@/components/motion";
 
 export const dynamic = "force-static";
 
@@ -24,6 +25,7 @@ export default function LocaleLayout({
       <Navbar locale={locale} />
       <main id="main">{children}</main>
       <Footer locale={locale} />
+      <InViewObserver />
     </>
   );
 }

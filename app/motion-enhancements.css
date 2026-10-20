@@ -1,0 +1,130 @@
+/* Motion layer. Only opacity, transform-family properties and clip-path move;
+   layout and visual design live in motion-design.css / interior.css.
+   Reuses --ease (strong ease-out). Individual `translate` / `scale` properties
+   are used where an element already owns `transform`, so the two compose. */
+:root {
+  --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+  --motion-enter: 700ms;
+  --motion-ui: 200ms;
+}
+
+/* ---------- Hero: load sequence (CSS, runs off the main thread) ---------- */
+@keyframes rise { from { opacity: 0; translate: 0 18px; } }
+@keyframes line-rise { from { transform: translateY(105%); } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes grow-in { from { opacity: 0; scale: .92; } }
+@keyframes paper-out { from { opacity: 0; translate: 0 46px; } }
+@keyframes folder-in { from { opacity: 0; translate: 0 26px; } }
+@keyframes tag-in { from { opacity: 0; scale: .95; translate: 0 12px; } }
+@keyframes check-in { from { opacity: 0; translate: -8px 0; } }
+@keyframes cue { to { translate: 0 3px; } }
+
+.hero-intro { animation: rise var(--motion-enter) var(--ease) both; }
+.hero h1 .line-mask > span { animation: line-rise 900ms var(--ease) both; }
+.hero h1 .line-mask:nth-child(1) > span { animation-delay: 80ms; }
+.hero h1 .line-mask:nth-child(2) > span { animation-delay: 160ms; }
+.hero h1 .line-mask:nth-child(3) > span { animation-delay: 240ms; }
+.hero-description { animation: rise var(--motion-enter) 280ms var(--ease) both; }
+.hero-copy > .button { animation: rise var(--motion-enter) 360ms var(--ease) both; }
+
+.scene-orbit { animation: grow-in 1000ms 100ms var(--ease) both; }
+.orbit-two { animation-delay: 180ms; }
+.folder-back { animation: folder-in 900ms 220ms var(--ease) both; }
+.paper-back { animation: paper-out 900ms 320ms var(--ease) both; }
+.paper-main { animation: paper-out 900ms 400ms var(--ease) both; }
+.folder-front { animation: folder-in 900ms 260ms var(--ease) both; }
+.paper-checks > div { animation: check-in 500ms var(--ease) both; }
+.paper-checks > div:nth-child(1) { animation-delay: 750ms; }
+.paper-checks > div:nth-child(2) { animation-delay: 830ms; }
+.paper-checks > div:nth-child(3) { animation-delay: 910ms; }
+.scene-tag { animation: tag-in var(--motion-enter) 950ms var(--ease) both; }
+.scene-caption, .hero-bottom { animation: fade-in var(--motion-enter) 1000ms var(--ease) both; }
+.scroll-circle svg { animation: cue 1200ms 1800ms var(--ease-in-out) infinite alternate; }
+
+/* Interior page headers get the same entrance, no JS. */
+.interior-hero > * { animation: rise var(--motion-enter) var(--ease) both; }
+.interior-hero > :nth-child(2) { animation-delay: 80ms; }
+.interior-hero > :nth-child(3) { animation-delay: 160ms; }
+
+/* ---------- Scroll reveals ----------
+   InViewObserver adds [data-inview]. Pre-states only apply once JS has
+   flagged <html> (.motion-ready), so content is never hidden without it. */
+.motion-ready [data-animate] .stagger > *,
+.motion-ready [data-animate] .lift,
+.motion-ready .stagger[data-animate] > * {
+  transition: opacity var(--motion-enter) var(--ease), translate var(--motion-enter) var(--ease);
+}
+.motion-ready [data-animate]:not([data-inview]) .lift,
+.motion-ready .stagger[data-animate]:not([data-inview]) > * { opacity: 0; translate: 0 22px; }
+.motion-ready .stagger[data-animate] > :nth-child(2) { transition-delay: 70ms; }
+.motion-ready .stagger[data-animate] > :nth-child(3) { transition-delay: 140ms; }
+.motion-ready .stagger[data-animate] > :nth-child(4) { transition-delay: 210ms; }
+
+/* Photo band statement */
+.motion-ready .photo-band-copy p { transition-delay: 80ms; }
+
+/* About: the two circles slide together, then the mark lands. */
+.motion-ready .about-symbol > * { transition: translate 900ms var(--ease), opacity 900ms var(--ease); }
+.motion-ready .about-symbol:not([data-inview]) > div:first-child { translate: -36px 0; }
+.motion-ready .about-symbol:not([data-inview]) > div + div { translate: 36px 0; }
+.motion-ready .about-symbol:not([data-inview]) > span { opacity: 0; translate: 0 10px; }
+.motion-ready .about-symbol > span { transition-delay: 250ms; }
+
+/* Process: each step's icon disc settles in after its card. */
+.motion-ready .step-art,
+.motion-ready .step-art svg { transition: scale 600ms var(--ease), rotate 600ms var(--ease), opacity 600ms var(--ease); }
+.motion-ready .process-grid:not([data-inview]) .step-art { scale: .8; opacity: 0; }
+.motion-ready .process-grid:not([data-inview]) .step-art svg { rotate: -25deg; }
+.motion-ready .process-step:nth-child(1) .step-art,
+.motion-ready .process-step:nth-child(1) .step-art svg { transition-delay: 150ms; }
+.motion-ready .process-step:nth-child(2) .step-art,
+.motion-ready .process-step:nth-child(2) .step-art svg { transition-delay: 230ms; }
+.motion-ready .process-step:nth-child(3) .step-art,
+.motion-ready .process-step:nth-child(3) .step-art svg { transition-delay: 310ms; }
+
+/* Map: the panel opens like a window, the label follows. */
+.motion-ready .map-panel { transition: clip-path 900ms var(--ease); }
+.motion-ready .map-panel:not([data-inview]) { clip-path: inset(6% 6% 6% 6% round 12px); }
+.motion-ready .map-label { transition: opacity 600ms 300ms var(--ease), translate 600ms 300ms var(--ease); }
+.motion-ready .map-panel:not([data-inview]) .map-label { opacity: 0; translate: 0 12px; }
+
+/* Closing CTA */
+.motion-ready .closing-copy > * { transition: opacity var(--motion-enter) var(--ease), translate var(--motion-enter) var(--ease); }
+.motion-ready .closing:not([data-inview]) .closing-copy > * { opacity: 0; translate: 0 24px; }
+.motion-ready .closing-copy > :nth-child(2) { transition-delay: 80ms; }
+.motion-ready .closing-copy > :nth-child(3) { transition-delay: 160ms; }
+.motion-ready .closing-object { transition: scale 1000ms 120ms var(--ease), opacity 1000ms 120ms var(--ease); }
+.motion-ready .closing:not([data-inview]) .closing-object { scale: .85; opacity: 0; }
+
+/* ---------- Disclosure: FAQ answers and the mobile menu ---------- */
+.faq-row > div { transition: opacity var(--motion-ui) var(--ease), translate var(--motion-ui) var(--ease); }
+.faq-row h3 button svg { transition: rotate var(--motion-ui) var(--ease); }
+@starting-style {
+  .faq-row > div { opacity: 0; translate: 0 -6px; }
+  .faq-row h3 button svg { rotate: -90deg; }
+}
+.mobile-menu { transition: opacity var(--motion-ui) var(--ease), translate var(--motion-ui) var(--ease); }
+.mobile-menu a { transition: opacity 250ms var(--ease), translate 250ms var(--ease); }
+.mobile-menu a:nth-child(2) { transition-delay: 30ms; }
+.mobile-menu a:nth-child(3) { transition-delay: 60ms; }
+.mobile-menu a:nth-child(4) { transition-delay: 90ms; }
+.mobile-menu a:nth-child(5) { transition-delay: 120ms; }
+@starting-style {
+  .mobile-menu { opacity: 0; translate: 0 -8px; }
+  .mobile-menu a { opacity: 0; translate: 0 -6px; }
+}
+
+/* ---------- Hover (pointer devices only) ---------- */
+.header-contact svg, .to-top svg, .contact-card > svg { transition: transform 250ms var(--ease); }
+.header-contact { transition: background 200ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .header-contact:hover svg { transform: translate(2px, -2px); }
+  .to-top:hover svg { transform: translate(2px, -2px); }
+  .contact-card:hover > svg { transform: scale(1.08) rotate(-6deg); }
+  .faq-row h3 button:hover svg { color: var(--blue); }
+}
+
+/* ---------- Reduced motion: keep fades, drop movement ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-circle svg { animation: none; }
+}
