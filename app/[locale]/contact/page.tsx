@@ -1,69 +1,8 @@
-import type { Locale } from "@/lib/locale";
-import { isLocale } from "@/lib/locale";
-import { Phone } from "lucide-react";
-
-export default function ContactPage({
-  params
-}: {
-  params: { locale: string };
-}) {
-  const locale: Locale = isLocale(params.locale) ? params.locale : "es";
-
-  return (
-    <div className="section space-y-6">
-      <h1 className="text-2xl font-semibold">
-        {locale === "es" ? "Contacto" : "Contact"}
-      </h1>
-      <p className="text-sm text-slate-300 max-w-2xl">
-        {locale === "es"
-          ? "Por ahora agendamos todas las citas por teléfono o WhatsApp."
-          : "For now we book all appointments by phone or WhatsApp."}
-      </p>
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-4 text-sm text-slate-300">
-          <p className="flex items-center gap-2">
-            <Phone className="h-4 w-4" />
-            <a href="tel:+16315550123" className="hover:text-slate-100">
-              (631) 555‑0123
-            </a>
-          </p>
-          <p>
-            WhatsApp:{" "}
-            <a
-              href="https://wa.me/16315550123"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-slate-100"
-            >
-              +1 (631) 555‑0123
-            </a>
-          </p>
-          <p>
-            Email:{" "}
-            <a href="mailto:info@example.com" className="hover:text-slate-100">
-              info@example.com
-            </a>
-          </p>
-          <p>
-            123 2nd Ave, Brentwood, NY 11717
-          </p>
-        </div>
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4">
-          <p className="text-xs text-slate-400 mb-2">
-            {locale === "es"
-              ? "Mapa (puedes reemplazar este iframe por el de tu ubicación real)."
-              : "Map (you can replace this iframe with your real location)."}
-          </p>
-          <div className="aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-900">
-            <iframe
-              title="Brentwood NY"
-              src="https://maps.google.com/maps?q=Brentwood%20NY&t=&z=13&ie=UTF8&iwloc=&output=embed"
-              className="h-full w-full border-0"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+﻿import { isLocale } from "@/lib/locale";
+import { LocationSection } from "@/components/home-sections";
+import { Phone, MessageCircle, Mail, ArrowUpRight } from "lucide-react";
+export default function ContactPage({ params }: { params: { locale: string } }) {
+  const locale = isLocale(params.locale) ? params.locale : "es";
+  const es = locale === "es";
+  return <><div className="interior-hero"><p className="section-note">{es ? "Estamos para ayudarte" : "We’re here to help"}</p><h1>{es ? "Todo empieza conversando." : "It starts with a conversation."}</h1><p>{es ? "Agendamos las citas por teléfono o WhatsApp. Contanos qué necesitás y te orientamos en el siguiente paso." : "We book appointments by phone or WhatsApp. Tell us what you need and we’ll guide you through the next step."}</p></div><section className="interior-content"><div className="contact-cards"><article className="contact-card"><Phone /><h2>{es ? "Llamanos" : "Call us"}</h2><p>{es ? "Atención en español e inglés." : "Support in English and Spanish."}</p><a className="text-link" href="tel:+16315550123">(631) 555-0123<ArrowUpRight size={18} /></a></article><article className="contact-card"><MessageCircle /><h2>WhatsApp</h2><p>{es ? "Una forma fácil de conversar." : "An easy way to connect."}</p><a className="text-link" href="https://wa.me/16315550123" target="_blank" rel="noreferrer">{es ? "Iniciar conversación" : "Start a conversation"}<ArrowUpRight size={18} /></a></article><article className="contact-card"><Mail /><h2>Email</h2><p>{es ? "Escribinos con tus preguntas." : "Get in touch with your questions."}</p><a className="text-link" href="mailto:info@example.com">info@example.com<ArrowUpRight size={18} /></a></article></div></section><LocationSection locale={locale} /></>;
 }

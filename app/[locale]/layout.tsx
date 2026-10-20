@@ -22,7 +22,7 @@ export default function LocaleLayout({
   return (
     <>
       <Navbar locale={locale} />
-      <main>{children}</main>
+      <main id="main">{children}</main>
       <Footer locale={locale} />
     </>
   );

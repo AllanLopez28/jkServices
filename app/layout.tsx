@@ -1,22 +1,25 @@
 // app/layout.tsx
 import "./globals.css";
+import "./motion-design.css";
+import "./interior.css";
 import type { ReactNode } from "react";
-import { Montserrat } from "next/font/google";
+import { DM_Sans, Manrope } from "next/font/google";
 
 export const dynamic = "force-static";
 
 // Montserrat con varios pesos, incluyendo Black (900) y Bold (700)
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"],
-  variable: "--font-montserrat"
-});
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
+export const metadata = {
+  title: "JK Service Agency — Clarity, at every step.",
+  description: "Contabilidad e impuestos en Brentwood, Nueva York. Atención personal en español e inglés."
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <body
-        className={`${montserrat.variable} font-sans bg-brand-background text-brand-text`}
+        className={`${dmSans.variable} ${manrope.variable}`}
       >
         {children}
       </body>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Locale } from "@/lib/locale";
 import { isLocale } from "@/lib/locale";
@@ -148,10 +149,10 @@ export default function ServicesPage({
   );
 
   return (
-    <div className="bg-brand-primaryLight min-h-[70vh]">
+    <div className="catalog min-h-[70vh]">
       <div className="section space-y-8">
         {/* Encabezado */}
-        <header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <header className="catalog-heading">
           <div className="space-y-2 max-w-xl">
             <h1 className="text-3xl md:text-4xl font-black text-brand-primaryDark">
               {t("Nuestros servicios", "Our services")}
@@ -165,11 +166,12 @@ export default function ServicesPage({
           </div>
 
           {/* Filtros */}
-          <div className="flex flex-wrap gap-2">
+          <div className="catalog-filters" aria-label={t("Categorías de servicios", "Service categories")}>
             {filters.map((filter) => (
               <motion.button
                 key={filter.id}
                 type="button"
+                aria-pressed={activeFilter === filter.id}
                 onClick={() => setActiveFilter(filter.id)}
                 whileTap={{ scale: 0.96 }}
                 className={`rounded-full px-4 py-2 text-xs font-bold border transition-colors ${
@@ -207,7 +209,7 @@ export default function ServicesPage({
                     y: -6,
                     boxShadow: "0 18px 35px rgba(15, 23, 42, 0.18)"
                   }}
-                  className="group relative flex flex-col rounded-[1.75rem] border border-slate-200 bg-gradient-to-br from-white to-[#F3F7FF] px-6 py-6 shadow-sm overflow-hidden"
+                  className="catalog-card group relative flex flex-col overflow-hidden"
                 >
                   {/* Glow suave al hover */}
                   <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[radial-gradient(circle_at_top_left,_rgba(37,99,235,0.12),_transparent_55%)]" />
@@ -240,13 +242,13 @@ export default function ServicesPage({
 
                     {/* Learn more (por ahora solo placeholder, luego lo conectamos a páginas detalle) */}
                     <div className="mt-3">
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-1 text-xs font-bold text-brand-primary hover:text-brand-primaryDark"
+                      <Link
+                        href={`/${locale}/contact`}
+                        className="text-link"
                       >
                         {t("Ver más", "Learn more")}
                         <ArrowRight className="h-3.5 w-3.5" />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </motion.article>
