@@ -1,4 +1,4 @@
-// app/[locale]/layout.tsx
+// apap/[locale]/layout.tsx
 import type { ReactNode } from "react";
 import { isLocale, type Locale } from "@/lib/locale";
 import { Navbar } from "@/components/navbar";
